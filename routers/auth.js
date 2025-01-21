@@ -10,23 +10,23 @@ const {
   verifyGoogleToken,
 } = require("../controllers/auth");
 const { userSignupValidator } = require("../validator");
-const { verifyToken } = require("../middlewares/auth-jwt");
+// const { verifyToken } = require("../middlewares/auth-jwt");
 
 router.post("/signup", userSignupValidator, signup);
 router.post("/signin", signin);
 router.get("/signout", signout);
 
-router.get("/hidden-content", verifyToken, function (req, res, user) {
-  if (!user) {
-    res.status(403).send({ message: "Invalid JWT Token" });
-  }
+// router.get("/hidden-content", verifyToken, function (req, res, user) {
+//   if (!user) {
+//     res.status(403).send({ message: "Invalid JWT Token" });
+//   }
 
-  if (req.user.role === 1) {
-    res.status(200).send({ message: "Ok! U can see content!" });
-  } else {
-    res.status(403).send({ message: "Unauthorised access!" });
-  }
-});
+//   if (req.user.role === 1) {
+//     res.status(200).send({ message: "Ok! U can see content!" });
+//   } else {
+//     res.status(403).send({ message: "Unauthorised access!" });
+//   }
+// });
 
 let DB = [];
 

@@ -1,0 +1,21 @@
+version: '3.9' # Specify Docker Compose version
+
+services:
+  mongodb:
+    image: mongo:latest # Use the latest MongoDB image
+    container_name: mongodb-container # Name of the MongoDB container
+    restart: always # Restart automatically on failure
+    ports:
+      - "27017:27017" # Map MongoDB port to host
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER} # Set admin username
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD} # Set admin password
+    volumes:
+      - mongodb_data:/data/db # Persist MongoDB data
+      - mongodb_config:/data/configdb # Persist MongoDB config data
+
+volumes:
+  mongodb_data:
+    driver: local # Default volume driver
+  mongodb_config:
+    driver: local
