@@ -5,22 +5,14 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const expressValidator = require("express-validator");
-
-const authRoutes = require("./routers/auth");
-const userRoutes = require("./routers/user");
-const categoryRoutes = require("./routers/category");
-const productRoutes = require("./routers/product");
+const { router } = require("./src/routers");
+const { mongooseConnection } = require("./src/dbs/init.mongo.js");
 
 require("dotenv").config();
 const app = express();
 
 //connect mong
-mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log("DB connected !"));
+mongooseConnection();
 
 //middlewares
 app.use(morgan("dev"));
@@ -30,10 +22,7 @@ app.use(expressValidator());
 app.use(cors());
 
 //router middleware
-app.use("/api", authRoutes);
-app.use("/api", userRoutes);
-app.use("/api", categoryRoutes);
-app.use("/api", productRoutes);
+app.use("/api", router);
 
 const port = process.env.PORT || 8000;
 
